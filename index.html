@@ -23,8 +23,6 @@
         <!--[if lt IE 7]>
             <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
         <![endif]-->
-
-        <!-- Add your site or application content here -->
         <header class="container-fluid navbar navbar-fixed-top" style="border-bottom: 1px solid #aaa;">
             <div class="row-fluid">
                 <div class="span8">
@@ -87,50 +85,71 @@
                                     <td>16</td>
                                     <td>Width of each of the "tabs" that make up the board</td>
                                 </tr>
+                                 <tr>
+                                    <td>initialX</td>
+                                    <td>Int</td>
+                                    <td>14</td>
+                                    <td>Point x axis</td>
+                                </tr>
+                                <tr>
+                                    <td>initialY</td>
+                                    <td>Int</td>
+                                    <td>23</td>
+                                    <td>Point Y axis, this value and initialX, pacman places in the game board</td>
+                                </tr>
+                                <tr>
+                                    <td>time</td>
+                                    <td>Int</td>
+                                    <td>250</td>
+                                    <td>movement speed</td>
+                                </tr>
                               </tbody>
                             </table>
 
                             <h3>Example Scenario</h3>
-                                <ol>
-                                    <li>X = wall</li>
-                                    <li>'.' =  road</li>
-                                    <li>You can change default map, when you create the game</li>
-                                </ol>
+                            <ol>
+                                <li>X = wall</li>
+                                <li>'.' =  road</li>
+                                <li>You can change default map, when you create the game</li>
+                            </ol>
 
-<pre class="prettyprint linenums">map =[
-    ['X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X'],
-    ['X','.','.','.','.','.','.','.','.','.','.','.','.','X','X','.','.','.','.','.','.','.','.','.','.','.','.','X'],
-    ['X','.','X','X','X','X','.','X','X','X','X','X','.','X','X','.','X','X','X','X','X','.','X','X','X','X','.','X'],
-    ['X','.','X','X','X','X','.','X','X','X','X','X','.','X','X','.','X','X','X','X','X','.','X','X','X','X','.','X'],
-    ['X','.','X','X','X','X','.','X','X','X','X','X','.','X','X','.','X','X','X','X','X','.','X','X','X','X','.','X'],
-    ['X','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','X'],
-    ['X','.','X','X','X','X','.','X','X','.','X','X','X','X','X','X','X','X','.','X','X','.','X','X','X','X','.','X'],
-    ['X','.','X','X','X','X','.','X','X','.','X','X','X','X','X','X','X','X','.','X','X','.','X','X','X','X','.','X'],
-    ['X','.','.','.','.','.','.','X','X','.','.','.','.','X','X','.','.','.','.','X','X','.','.','.','.','.','.','X'],
-    ['X','X','X','X','X','X','.','X','X','X','X','X','.','X','X','.','X','X','X','X','X','.','X','X','X','X','X','X'],
-    ['X','X','X','X','X','X','.','X','X','X','X','X','.','X','X','.','X','X','X','X','X','.','X','X','X','X','X','X'],
-    ['X','X','X','X','X','X','.','X','X','.','.','.','.','.','.','.','.','.','.','X','X','.','X','X','X','X','X','X'],
-    ['X','X','X','X','X','X','.','X','X','.','X','X','X','-','-','X','X','X','.','X','X','.','X','X','X','X','X','X'],
-    ['X','X','X','X','X','X','.','X','X','.','X','h','h','h','h','h','h','X','.','X','X','.','X','X','X','X','X','X'],
-    ['.','.','.','.','.','.','.','.','.','.','X','h','h','h','h','h','h','X','.','.','.','.','.','.','.','.','.','.'],
-    ['X','X','X','X','X','X','.','X','X','.','X','h','h','h','h','h','h','X','.','X','X','.','X','X','X','X','X','X'],
-    ['X','X','X','X','X','X','.','X','X','.','X','X','X','X','X','X','X','X','.','X','X','.','X','X','X','X','X','X'],
-    ['X','X','X','X','X','X','.','X','X','.','.','.','.','.','.','.','.','.','.','X','X','.','X','X','X','X','X','X'],
-    ['X','X','X','X','X','X','.','X','X','.','X','X','X','X','X','X','X','X','.','X','X','.','X','X','X','X','X','X'],
-    ['X','X','X','X','X','X','.','X','X','.','X','X','X','X','X','X','X','X','.','X','X','.','X','X','X','X','X','X'],
-    ['X','.','.','.','.','.','.','.','.','.','.','.','.','X','X','.','.','.','.','.','.','.','.','.','.','.','.','X'],
-    ['X','.','X','X','X','X','.','X','X','X','X','X','.','X','X','.','X','X','X','X','X','.','X','X','X','X','.','X'],
-    ['X','.','X','X','X','X','.','X','X','X','X','X','.','X','X','.','X','X','X','X','X','.','X','X','X','X','.','X'],
-    ['X','.','.','.','X','X','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','X','X','.','.','.','X'],
-    ['X','X','X','.','X','X','.','X','X','.','X','X','X','X','X','X','X','X','.','X','X','.','X','X','.','X','X','X'],
-    ['X','X','X','.','X','X','.','X','X','.','X','X','X','X','X','X','X','X','.','X','X','.','X','X','.','X','X','X'],
-    ['X','.','.','.','.','.','.','X','X','.','.','.','.','X','X','.','.','.','.','X','X','.','.','.','.','.','.','X'],
-    ['X','.','X','X','X','X','X','X','X','X','X','X','.','X','X','.','X','X','X','X','X','X','X','X','X','X','.','X'],
-    ['X','.','X','X','X','X','X','X','X','X','X','X','.','X','X','.','X','X','X','X','X','X','X','X','X','X','.','X'],
-    ['X','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','X'],
-    ['X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X'],
+<pre class="prettyprint linenums">map =[<br>['X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X'],
+['X','.','.','.','.','.','.','.','.','.','.','.','.','X','X','.','.','.','.','.','.','.','.','.','.','.','.','X'],
+['X','.','X','X','X','X','.','X','X','X','X','X','.','X','X','.','X','X','X','X','X','.','X','X','X','X','.','X'],
+['X','.','X','X','X','X','.','X','X','X','X','X','.','X','X','.','X','X','X','X','X','.','X','X','X','X','.','X'],
+['X','.','X','X','X','X','.','X','X','X','X','X','.','X','X','.','X','X','X','X','X','.','X','X','X','X','.','X'],
+['X','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','X'],
+['X','.','X','X','X','X','.','X','X','.','X','X','X','X','X','X','X','X','.','X','X','.','X','X','X','X','.','X'],
+['X','.','X','X','X','X','.','X','X','.','X','X','X','X','X','X','X','X','.','X','X','.','X','X','X','X','.','X'],
+['X','.','.','.','.','.','.','X','X','.','.','.','.','X','X','.','.','.','.','X','X','.','.','.','.','.','.','X'],
+['X','X','X','X','X','X','.','X','X','X','X','X','.','X','X','.','X','X','X','X','X','.','X','X','X','X','X','X'],
+['X','X','X','X','X','X','.','X','X','X','X','X','.','X','X','.','X','X','X','X','X','.','X','X','X','X','X','X'],
+['X','X','X','X','X','X','.','X','X','.','.','.','.','.','.','.','.','.','.','X','X','.','X','X','X','X','X','X'],
+['X','X','X','X','X','X','.','X','X','.','X','X','X','-','-','X','X','X','.','X','X','.','X','X','X','X','X','X'],
+['X','X','X','X','X','X','.','X','X','.','X','h','h','h','h','h','h','X','.','X','X','.','X','X','X','X','X','X'],
+['.','.','.','.','.','.','.','.','.','.','X','h','h','h','h','h','h','X','.','.','.','.','.','.','.','.','.','.'],
+['X','X','X','X','X','X','.','X','X','.','X','h','h','h','h','h','h','X','.','X','X','.','X','X','X','X','X','X'],
+['X','X','X','X','X','X','.','X','X','.','X','X','X','X','X','X','X','X','.','X','X','.','X','X','X','X','X','X'],
+['X','X','X','X','X','X','.','X','X','.','.','.','.','.','.','.','.','.','.','X','X','.','X','X','X','X','X','X'],
+['X','X','X','X','X','X','.','X','X','.','X','X','X','X','X','X','X','X','.','X','X','.','X','X','X','X','X','X'],
+['X','X','X','X','X','X','.','X','X','.','X','X','X','X','X','X','X','X','.','X','X','.','X','X','X','X','X','X'],
+['X','.','.','.','.','.','.','.','.','.','.','.','.','X','X','.','.','.','.','.','.','.','.','.','.','.','.','X'],
+['X','.','X','X','X','X','.','X','X','X','X','X','.','X','X','.','X','X','X','X','X','.','X','X','X','X','.','X'],
+['X','.','X','X','X','X','.','X','X','X','X','X','.','X','X','.','X','X','X','X','X','.','X','X','X','X','.','X'],
+['X','.','.','.','X','X','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','X','X','.','.','.','X'],
+['X','X','X','.','X','X','.','X','X','.','X','X','X','X','X','X','X','X','.','X','X','.','X','X','.','X','X','X'],
+['X','X','X','.','X','X','.','X','X','.','X','X','X','X','X','X','X','X','.','X','X','.','X','X','.','X','X','X'],
+['X','.','.','.','.','.','.','X','X','.','.','.','.','X','X','.','.','.','.','X','X','.','.','.','.','.','.','X'],
+['X','.','X','X','X','X','X','X','X','X','X','X','.','X','X','.','X','X','X','X','X','X','X','X','X','X','.','X'],
+['X','.','X','X','X','X','X','X','X','X','X','X','.','X','X','.','X','X','X','X','X','X','X','X','X','X','.','X'],
+['X','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','.','X'],
+['X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X'],
 ]</pre>
-
+                            <h3>Private Arguments</h3>
+                            <pre class="prettyprint linenums">var pacman; //Yellow Pacman<br>var blinky; //Red Ghost<br>var pinky;  //Pink Ghost<br>var inky;   //Cyan Ghost<br>var clyde;  //Orange Ghost<br>var stepping = []; //Array where i store the steps to resolve the maze<br>var step=0;//index of Array</pre>
+                            <h3>Private Arguments</h3>
+                            <pre class="prettyprint linenums">
+                            </pre>
                         </div>
                     </div>
                 </div>
@@ -168,29 +187,35 @@
                        <img src="./img/css3.png" alt="css3">
                     </div>
                     <div class="span8" style="text-align: center;">
-                          <p class="muted credit">Game developed by <a href="https://twitter.com/MarioSkill">MarioSkill</a> and hosted on GitHub.<a href="https://github.com/MarioSkill/pacmanjs/">Pacmanjs</a></p>
+                          <p class="muted credit">
+                            Game developed by <a href="https://twitter.com/MarioSkill">MarioSkill</a> and hosted on GitHub.<a href="https://github.com/MarioSkill/pacmanjs/">Pacmanjs</a><br>
+                            Template developed by <a href="https://twitter.com/MarioSkill">MarioSkill</a> using <a href="http://twitter.github.com/bootstrap/">Bootstrap</a>,
+                            Type of font <a href="http://www.google.com/webfonts/specimen/Marcellus+SC">Marcellus+SC from Google Fonts</a>
+                            <br />This work is licensed under <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.es_CO">Creative Commons Attribution-ShareAlike 3.0 Unported License.</a>.
+                        </p>
                     </div>
                     <div class="span2">
                         <ul class="unstyled">
-                            <li><a href="https://twitter.com/share" class="twitter-share-button" data-via="MarioSkill" data-lang="es" data-size="large">Twittear</a></li>
+                            <li>
+                                <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://marioskill.github.com/jPacman/" data-via="MarioSkill" data-lang="es" data-size="large" data-related="marioSkill">Twittear</a>
+                            </li>
+                            <li>
+                                <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.es_CO"><img alt="Licencia Creative Commons" style="border-width:0" src="http://i.creativecommons.org/l/by-sa/3.0/88x31.png" /></a>
+                            </li>
                         </ul>
                     </div>
                 </div>
             </div>
         </footer>
-
         <script src="js/vendor/jquery-1.8.2.min.js"></script>
         <script src="js/vendor/jQuery.jPacman.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/prettify.js"></script>
         <script type="text/javascript">
-
-
             $(document).ready(function(){
                 $("#play").click(function() {
                         $('#tablero').jPacman();
                     });
-
             })
         </script>
         <script type="text/javascript">
@@ -205,7 +230,8 @@
                 var s = document.getElementsByTagName('script')[0];
                 s.parentNode.insertBefore(wf, s);
             })();
-            !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
+        </script>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
         </script>
     </body>
 </html>
