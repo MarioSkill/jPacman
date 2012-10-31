@@ -7,9 +7,10 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>Pacman Game in HTML5 and CSS3 whit jQuery by @MarioSkill</title>
-        <meta name="description" content="">
+        <meta name="description" content="Clasic Pacman Game, developed in jQuery and HTML5 whit CSS3">
         <meta name="viewport" content="width=device-width">
-
+        <meta name="author" content="Mario Vasile Cabezas">
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
         <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -71,7 +72,7 @@
                                     <td>map</td>
                                     <td>Array</td>
                                     <td>Array[]</td>
-                                    <td>Pacman map is used to draw the game</td>
+                                    <td>Pacman map, is used to draw the game</td>
                                 </tr>
                                  <tr>
                                     <td>Height</td>
@@ -147,9 +148,8 @@
 ]</pre>
                             <h3>Private Arguments</h3>
                             <pre class="prettyprint linenums">var pacman; //Yellow Pacman<br>var blinky; //Red Ghost<br>var pinky;  //Pink Ghost<br>var inky;   //Cyan Ghost<br>var clyde;  //Orange Ghost<br>var stepping = []; //Array where i store the steps to resolve the maze<br>var step=0;//index of Array</pre>
-                            <h3>Private Arguments</h3>
-                            <pre class="prettyprint linenums">
-                            </pre>
+                            <h3>Private Methods</h3>
+                            <pre class="prettyprint linenums">draw: function()// Draw board<br>move: function(x,y) //Bolean function, say if you can move the dummie<br>listen:function()//read keystrokes<br>autoMove:function()//like move but automatic<br>hunt:function() // go to looking pacman and try to hunt<br>resolve:function(x,y,lab)// function used to get the path to pacman</pre>
                         </div>
                     </div>
                 </div>
@@ -167,12 +167,23 @@
                                 Date:       31/10/2012 # fotmat(dd/mm/year) #<br>
                                 Twitter:    <a class="text-warning" href="https://twitter.com/MarioSkill">@MarioSkill</a>
                             </p>
-                            <h3>How is Work now ?</h3>
-                                <ol>
-                                    <li>Draw the board</li>
-                                    <li>Move pacman for all board</li>
-                                    <li>"Resolve" the maze, find the pacman and try to hunt</li>
-                                </ol>
+                        <div>
+                    </div>
+                    <div class="row">
+                        <div class="span6">
+                            <h3>What is Work now ?</h3>
+                            <ol>
+                                <li>Draw the board</li>
+                                <li>Move pacman for all board</li>
+                                <li>"Resolve" the maze, find the pacman and try to hunt</li>
+                            </ol>
+                        </div>
+                        <div class="span6">
+                            <h3>known issues</h3>
+                            <ol>
+                                <li>Infinity loop, when you press play buttom</li>
+                            </ol>
+                            <p>This proyect is development and is not finish</p>
                         </div>
                     </div>
                 </div>
@@ -188,7 +199,7 @@
                     </div>
                     <div class="span8" style="text-align: center;">
                           <p class="muted credit">
-                            Game developed by <a href="https://twitter.com/MarioSkill">MarioSkill</a> and hosted on GitHub.<a href="https://github.com/MarioSkill/pacmanjs/">Pacmanjs</a><br>
+                            Game developed by <a href="https://twitter.com/MarioSkill">MarioSkill</a> and hosted on GitHub/<a href="https://github.com/MarioSkill/pacmanjs/">Pacmanjs</a><br>
                             Template developed by <a href="https://twitter.com/MarioSkill">MarioSkill</a> using <a href="http://twitter.github.com/bootstrap/">Bootstrap</a>,
                             Type of font <a href="http://www.google.com/webfonts/specimen/Marcellus+SC">Marcellus+SC from Google Fonts</a>
                             <br />This work is licensed under <a rel="license" href="http://creativecommons.org/licenses/by-sa/3.0/deed.es_CO">Creative Commons Attribution-ShareAlike 3.0 Unported License.</a>.
