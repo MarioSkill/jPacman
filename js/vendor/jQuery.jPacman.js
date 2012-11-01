@@ -8,6 +8,8 @@
             initialX:14,
             initialY:23,
             time:250,
+            lives:3,
+            score:0,
             map:[
                 ['X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X','X'],
                 ['X','.','.','.','.','.','.','.','.','.','.','.','.','X','X','.','.','.','.','.','.','.','.','.','.','.','.','X'],
@@ -49,9 +51,15 @@
         var inky;   //Cyan Ghost
         var clyde;  //Orange Ghost
         /******************************************** ******* ********************************************/
-        /******************************************** Dummies ********************************************/
+        /******************************************** ******* ********************************************/
         var stepping = [];
         var step=0;
+        var clearTime;
+        var clearTimeMove;
+        var isTakeTime;
+        var GamePlay = true;
+        var OriginalMap;
+        var CoinsMap;
         /******************************************** ******* ********************************************/
         var element
         var settings = {}
@@ -62,6 +70,43 @@
                 return this.each(function() {
                     settings = $.extend({}, defaults, options)
                     element = $(this);
+                    OriginalMap=settings.map.clone();
+                    CoinsMap=settings.map.clone();
+                    helpers.game('play');
+                });
+
+            },
+
+            foo_public_method: function() {
+                // code goes here
+            }
+
+        }
+        //Private Methods...
+        var helpers = {
+            /*
+            * Draw the map inside of element
+            */
+            draw: function() {
+                element.html('');
+                var id;
+                for (var i = 0; i < settings.map.length; i++) {
+                    for (var j = 0; j < settings.map[i].length; j++){
+                        id='';
+                        if(settings.map[i][j]=='P'){
+                            id='id="Pacman"';
+                        }else if(settings.map[i][j]=='B'){
+                            id='id="Blinky"';
+                        }
+                        element.append('<i class="box" '+id+'>'+settings.map[i][j]+'</i>');
+                    }
+                }
+            },
+            game:function(status){
+                if (status=='play'){
+                    $('#score').html(settings.score);
+                    $('#lives').html(settings.lives);
+                    settings.map=OriginalMap.clone();
                     pacman=new Pacman(settings.initialX,settings.initialY,'P');
                     pacman.autoX=-1;
                     pacman.autoY=0;
@@ -79,32 +124,26 @@
 
                     helpers.listen();
                     helpers.draw();
-                    if( helpers.resolve(blinky.x,blinky.y,settings.map.clone() ) ){
-                        alert(1);
-                    }else
-                        alert(2);
-                    setInterval( helpers.autoMove,settings.time);
-                    setInterval( helpers.hunt,settings.time);
-                });
+                    helpers.resolve(blinky.x,blinky.y,settings.map.clone())
+                    isTakeTime=setInterval( helpers.isTake,40);
+                    clearTimeMove=setInterval( helpers.autoMove,settings.time);
+                    clearTime=setInterval( helpers.hunt,(settings.time/1.20));
 
+                }else if(status=='stop'){
+                    settings.lives--;
+                    clearInterval(isTakeTime);
+                    clearInterval(clearTimeMove);
+                    clearInterval(clearTime);
+                }
+                if (settings.lives==0){
+                    $('#lives').html(" Game Over :(");
+                }else if(status !='play'){
+                    helpers.game('play');
+                }
             },
-
-            foo_public_method: function() {
-                // code goes here
-            }
-
-        }
-        //Private Methods...
-        var helpers = {
-            /*
-            * Draw the map inside of element
-            */
-            draw: function() {
-                element.html('');
-                for (var i = 0; i < settings.map.length; i++) {
-                    for (var j = 0; j < settings.map[i].length; j++) {
-                        element.append('<i class="box">'+settings.map[i][j]+'</i>');
-                    }
+            isTake:function(){
+                if(settings.map[pacman.y][pacman.x] == settings.map[blinky.y][blinky.x]){
+                    helpers.game('stop');
                 }
             },
             put: function(x,y,dummie){
@@ -185,6 +224,11 @@
                     }
                     pacman.x+=x;pacman.y+=y;
                     settings.map[pacman.y][pacman.x]=pacman.initial;
+                    if(CoinsMap[pacman.y][pacman.x]=='.'){
+                        CoinsMap[pacman.y][pacman.x]='-';
+                         $('#score').html(settings.score+=10);
+                    }
+
                     helpers.draw();
                 }
             },
