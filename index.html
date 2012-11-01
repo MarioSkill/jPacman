@@ -32,9 +32,13 @@
                   </a>
                   <a class="brand" href="#">jPacman Project, developed in jQuery</a>
                   <div class="nav-collapse collapse">
-                    <div class="span3">
-                         <a href="https://github.com/MarioSkill/jPacman" class="brand">View project on GitHub</a>
-                    </div>
+                    <ul class="nav">
+                      <li><a href="https://github.com/MarioSkill/jPacman">View project on GitHub</a></li>
+                      <li><a href="https://github.com/MarioSkill/jPacman/zipball/master">Download</a></li>
+                    </ul>
+                     <ul class="nav pull-right"><li><a href="#up" id="goUp">Up to top</a></li></ul>
+
+
                     <!--[if lt IE 7]>
                         <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
                     <![endif]-->
@@ -46,17 +50,15 @@
         <div class="container-fluid game">
             <div class="row-fluid ">
                 <div class="span12">
-                    <legend>
+                    <legend style="border-bottom:1px solid #252525;" id="up">
                         <h1><img src="./img/pacman-logo.png" alt="Pacman logo" style="max-height: 30px;"> Pacman Game</h1>
                     </legend>
                 </div>
             </div>
             <div class="row-fluid">
-                <div class="span3">
+                <div class="span12" style="text-align: center;">
+                    <div id="stage" ></div><br>
                     <button id="play" type="button" class="btn btn-success" ><i class="icon-play-circle"></i> <strong>Play</strong> </button>
-                </div>
-                <div class="span8" >
-                    <div id="stage" ></div>
                 </div>
                 <br><br>
             </div>
@@ -66,7 +68,7 @@
             <div class="row-fluid white-panel" >
                 <div class="span12">
                     <legend>
-                        <h1>Documentation</h1>
+                        <h1><i class="icon-github"></i> Documentation</h1>
                     </legend>
                     <h3>Initial Plugin</h3><p>Call jQuery and create the object jPacman</p>
                     <pre class="prettyprint linenums"><code>$('#tablero').jPacman({<br>     foo : 'bar',<br>     bar : 'foo'<br>});</code></pre>
@@ -167,7 +169,7 @@
             <div class="row-fluid white-panel end">
                 <div class="span12">
                     <legend>
-                        <h1>Changelog Current Version</h1>
+                        <h1><i class="icon-github"></i> Changelog Current Version</h1>
                     </legend>
                         <blockquote>
                             <strong>
@@ -234,13 +236,15 @@
               </div>
             </div>
         </footer>
-    </body>
         <script src="js/vendor/jquery-1.8.2.min.js"></script>
         <script src="js/vendor/jQuery.jPacman.js"></script>
         <script src="js/bootstrap.min.js"></script>
         <script src="js/prettify.js"></script>
         <script type="text/javascript">
             $(document).ready(function(){
+                $('#goUp').click(function(){
+                    $('html, body').animate({ scrollTop:1 }, 'slow');
+                });
                 $("#play").click(function() {
                         $('#stage').jPacman();
                     });
