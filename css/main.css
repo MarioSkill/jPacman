@@ -15,16 +15,17 @@ footer img{max-height: 60px;}
 
 #stage{color: white;background-image:url(../img/escenario.jpg);width: 463px;height: 512px; margin: auto;}/*background-image:url(../img/escenario.jpg);*/
 .box{width: 16px;height: 16px;float: left; text-align: center;}
-.p{position: absolute;left:0;top:0; margin: 9px;}
-#Pacman{background: #f3ce13;}
-#Blinky{background: #dd0017;}
-#Pinky{background:#ea4c89;}
-#Inky{background:#9dcc7a;}
-#Clyde{background:#ff7700;}
+.dummie{position: absolute; margin: 9px; background-image: url(https://www.google.com/logos/pacman10-hp-sprite-2.png);}
+#Pacman{background-position: -22px -2px;}
+#Blinky{background-position: -82px -82px;}
+#Pinky{background-position: -102px -102px;}
+#Inky{background-position: -102px -122px;}
+#Clyde{background-position: -102px -142px;}
 .coin{background: #fcd20b; border-radius: 500px;height: 5px;width: 5px; position: absolute; margin:14px; }
 .gameMenu{margin: auto; width: 463px;}
 .gameMenu li{margin-left: 10px;}
 .gameMenu h3{line-height: 10px;color: #ffcc33;}
+#gameOver{position: absolute;height: 16px; color:#dd0017;font-size: 24px;background: black;margin:7px; font-weight: bold;}
 
 
 
