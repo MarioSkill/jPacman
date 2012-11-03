@@ -7,7 +7,7 @@
             width: 16,
             initialX:14,
             initialY:23,
-            time:250,
+            time:282,
             lives:3,
             score:0,
             map:[
@@ -57,9 +57,12 @@
         var clearTime;
         var clearTimeMove;
         var isTakeTime;
+        var clearRepeat;
         var GamePlay = true;
         var OriginalMap;
         var CoinsMap;
+        var change=0;
+        var win=0;
         /******************************************** ******* ********************************************/
         var element
         var settings = {}
@@ -124,7 +127,8 @@
                 }
                 var x = element.offset().left + (dummie.x*settings.width);
                 var y = element.offset().top  + (dummie.y*settings.height);
-                $(id).animate({"left": x,"top": y},0);
+
+                $(id).animate({"left": x,"top": y},262,'linear');
             },
             game:function(status){
                 if (status=='play'){
@@ -159,12 +163,21 @@
                     isTakeTime=setInterval( helpers.isTake,40);
                     clearTimeMove=setInterval( helpers.autoMove,settings.time);
                     clearTime=setInterval( helpers.hunt,settings.time);
-
+                    clearRepeat=setInterval(helpers.animatioPacman,70);
                 }else if(status=='stop'){
                     settings.lives--;
                     clearInterval(isTakeTime);
                     clearInterval(clearTimeMove);
                     clearInterval(clearTime);
+                    clearInterval(clearRepeat);
+                }else if(status=='win'){
+                    clearInterval(isTakeTime);
+                    clearInterval(clearTimeMove);
+                    clearInterval(clearTime);
+                    clearInterval(clearRepeat);
+                    var x = element.offset().left + (10*settings.width);
+                    var y = element.offset().top  + (17*settings.height);
+                    element.append('<i id="gameOver" style="top:'+y+'px; left: '+x+'px;">You Win :)</i>')
                 }
                 if (settings.lives==0){
                     $('#lives').html(" Game Over :(");
@@ -178,6 +191,8 @@
             isTake:function(){
                 if(settings.map[pacman.y][pacman.x] == settings.map[blinky.y][blinky.x]){
                     helpers.game('stop');
+                }else if(win==300){
+                    helpers.game('win');
                 }
             },
             put: function(x,y,dummie){
@@ -246,9 +261,12 @@
 
             },
             autoMove:function(){
+
                 var x=pacman.autoX,y=pacman.autoY;
                 if(helpers.move(pacman.x+x,pacman.y+y,pacman.initial)){
+
                     settings.map[pacman.y][pacman.x]='.';
+
                     if(pacman.x+x==28){
                         pacman.x=0;
                         x=0;
@@ -258,19 +276,19 @@
                     }
                     pacman.x+=x;pacman.y+=y;
                     settings.map[pacman.y][pacman.x]=pacman.initial;
-
-                    if(CoinsMap[pacman.y][pacman.x]=='.'){
-                        pacman.changeImage((pacman.y+pacman.x),true);
-                        $('#'+pacman.x+'_'+pacman.y).addClass('hidden');
-                        CoinsMap[pacman.y][pacman.x]='-';
-                         $('#score').html(settings.score+=10);
-
-                    }else{
-                         pacman.changeImage((pacman.y+pacman.x),false);
-                    }
-
-                    helpers.draw2(pacman);
+                    pacman.sw=true;
+                }else{
+                    pacman.sw=false;
                 }
+                helpers.draw2(pacman);
+                if(CoinsMap[pacman.y][pacman.x]=='.'){
+                    $('#'+pacman.x+'_'+pacman.y).addClass('hidden');
+                    CoinsMap[pacman.y][pacman.x]='-';
+                    $('#score').html(settings.score+=10);
+                    win++;
+                }
+
+
             },
             hunt:function(){
                 step--;
@@ -347,18 +365,71 @@
                 lab[y][x] = '.';
                 return false;
 
-            },animotion:function(dummie){
+            },
+            animotion:function(dummie){
                 var x=0,y=-82;
-                if(dummie.autoX == 0 && dummie.autoY==-1){//arriva
-                    y=-82;x=-2;
-                }else if(dummie.autoX == 0 && dummie.autoY==1){//abajo
-                    y=-82;x=-42;
-                }else if(dummie.autoX == -1 && dummie.autoY==0){//izquiweda
-                    y=-82;x=-82;
-                }else if(dummie.autoX == 1 && dummie.autoY==0){ //Derecha
-                    y=-82;x=-122;
+                switch(dummie.initial){
+                    case 'P':
+                        id='#Pacman';
+                    break;
+                    case 'B':
+                        id='#Blinky';
+                        y=-82;
+                    break;
+                    case 'K':
+                        id='#Pinky';
+                        y=-102;
+                    break;
+                    case 'I':
+                        id='#Inky';
+                        y=-122;
+                    break;
+                    case 'C':
+                        id='#Clyde';
+                        y=-142;
+                    break;
                 }
-                $('#Blinky').css('background-position' , x+'px '+ y+'px' );
+
+                if(dummie.autoX == 0 && dummie.autoY==-1){//arriva
+                   x=-2;
+                }else if(dummie.autoX == 0 && dummie.autoY==1){//abajo
+                   x=-42;
+                }else if(dummie.autoX == -1 && dummie.autoY==0){//izquiweda
+                   x=-82;
+                }else if(dummie.autoX == 1 && dummie.autoY==0){ //Derecha
+                   x=-122;
+                }
+                if((dummie.x+dummie.y)%2==0)
+                    $(id).css('background-position' , x+'px '+ y+'px' );
+                else
+                    $(id).css('background-position' , (x-20)+'px '+ y+'px' );
+            },
+            animatioPacman:function(){
+
+                var x=-22,y=0;
+                if(pacman.autoX == 0 && pacman.autoY==-1){//arriva
+                    y=-42;x=-22;
+                }else if(pacman.autoX == 0 && pacman.autoY==1){//abajo
+                    y=-62;x=-22;
+                }else if(pacman.autoX == -1 && pacman.autoY==0){//izquiweda
+                    y=-2;x=-22;
+                }else if(pacman.autoX == 1 && pacman.autoY==0){ //Derecha
+                    y=-22;x=-22;
+                }
+                if(pacman.sw){
+                    if( change ==0){
+                        $('#Pacman').css({'background-position-x': (x+'px'), 'background-position-y':  (y+'px') });
+                        change=1;
+                    }else if(change ==1){
+                        $('#Pacman').css({'background-position-x': (0+'px'), 'background-position-y':  (y+'px') });
+                        change=2;
+                    }else{
+                        $('#Pacman').css({'background-position-x': (-42+'px'), 'background-position-y':  (-2+'px') });
+                        change=0;
+                    }
+                }else{
+                    $('#Pacman').css({'background-position-x': (x+'px'), 'background-position-y':  (y+'px') });
+                }
             }
 
         }
@@ -368,27 +439,7 @@
             this.autoX;
             this.autoY;
             this.initial=initial;
-            this.changeImage=function(i,sw){
-                var x=-22,y=0;
-                if(this.autoX == 0 && this.autoY==-1){//arriva
-                    y=-42;x=-22;
-                }else if(this.autoX == 0 && this.autoY==1){//abajo
-                    y=-58;x=-22;
-                }else if(this.autoX == -1 && this.autoY==0){//izquiweda
-                    y=-2;x=-22;
-                }else if(this.autoX == 1 && this.autoY==0){ //Derecha
-                    y=-22;x=-22;
-                }
-                if(sw){
-                    if(i%2==0){
-                        $('#Pacman').css('background-position' , x+'px '+ y+'px' );
-                    }else{
-                        $('#Pacman').css('background-position' , 0+'px '+ y+'px' );
-                    }
-                }else{
-                    $('#Pacman').css('background-position' , x+'px '+ y+'px' );
-                }
-            }
+            this.sw=true;
         }
         function Point(x,y){
             this.x=x;

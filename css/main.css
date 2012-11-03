@@ -18,10 +18,10 @@ footer img{max-height: 60px;}
 .dummie{position: absolute; margin: 9px; background-image: url(https://www.google.com/logos/pacman10-hp-sprite-2.png);}
 #Pacman{background-position: -22px -2px;}
 #Blinky{background-position: -82px -82px;}
-#Pinky{background-position: -102px -102px;}
-#Inky{background-position: -102px -122px;}
-#Clyde{background-position: -102px -142px;}
-.coin{background: #fcd20b; border-radius: 500px;height: 5px;width: 5px; position: absolute; margin:14px; }
+#Pinky{background-position: -82px -102px;}
+#Inky{background-position:  -82px -122px;}
+#Clyde{background-position: -82px -142px;}
+.coin{width: 6px;height: 6px;margin-left: 14px;margin-top: 14px;background: #F8B090; position: absolute; border-radius: 300px;}
 .gameMenu{margin: auto; width: 463px;}
 .gameMenu li{margin-left: 10px;}
 .gameMenu h3{line-height: 10px;color: #ffcc33;}
