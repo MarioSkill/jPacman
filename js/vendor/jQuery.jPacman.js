@@ -63,6 +63,7 @@
         var CoinsMap;
         var change=0;
         var win=0;
+        var modo;
         /******************************************** ******* ********************************************/
         var element
         var settings = {}
@@ -132,6 +133,7 @@
             },
             game:function(status){
                 if (status=='play'){
+                    modo='play'
                     $('#score').html(settings.score);
                     $('#lives').html(settings.lives);
                     settings.map=jQuery.extend(true,[],OriginalMap);
@@ -170,6 +172,22 @@
                     clearInterval(clearTimeMove);
                     clearInterval(clearTime);
                     clearInterval(clearRepeat);
+                }else if(status=='pause'){
+                     var x = element.offset().left + (10*settings.width);
+                    var y = element.offset().top  + (17*settings.height);
+                    element.append('<i id="gameOver" style="top:'+y+'px; left: '+x+'px;">Game Paused.</i>')
+                    clearInterval(isTakeTime);
+                    clearInterval(clearTimeMove);
+                    clearInterval(clearTime);
+                    clearInterval(clearRepeat);
+                    modo='pause';
+                }else if(status=='continue'){
+                    $('#gameOver').remove();
+                    isTakeTime=setInterval( helpers.isTake,40);
+                    clearTimeMove=setInterval( helpers.autoMove,settings.time);
+                    clearTime=setInterval( helpers.hunt,settings.time);
+                    clearRepeat=setInterval(helpers.animatioPacman,70);
+                    modo='play';
                 }else if(status=='win'){
                     clearInterval(isTakeTime);
                     clearInterval(clearTimeMove);
@@ -235,22 +253,35 @@
                 var x=0,y=0;
                 $(document).bind('keydown',function(e){
                         switch(parseInt(e.which)){
-                            case 87://adelante (w)
+                            case 87://up
+                            case 38:
                                 x=0;y=-1;
-                               // helpers.mover(element,0,-1,0);
+                                e.preventDefault();
                             break;
-                            case 83://atras (s)
-                                //helpers.mover(element,0,1,0);
+                            case 83://down (s)
+                            case 40:
                                 x=0;y=1;
+                                e.preventDefault();
                             break;
                             case 65://izquierda (a)
+                            case 37:
                                 x=-1;y=0;
-                                //helpers.mover(element,-1,0,0);
+                                e.preventDefault();
                             break;
                             case 68://drecja(d)
+                            case 39:
                                 x=1;y=0;
-                                //helpers.mover(element,1,0,0);
+                                e.preventDefault();
                             break;
+                            case 80:
+                                e.preventDefault();
+                                if(modo=='play'){
+                                    helpers.game('pause');
+                                }else{
+                                     helpers.game('continue');
+                                }
+                            break;
+
                         }
                         if(helpers.move(pacman.x+x,pacman.y+y,pacman.initial)){
                             pacman.autoX=x;
